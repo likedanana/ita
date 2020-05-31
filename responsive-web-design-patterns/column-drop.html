@@ -24,30 +24,30 @@
 
         /* 중간 화면(700~1200) */
         @media (min-width: 700px){
-            .sidebar{width: 35%;}
+            .sidebar1{width: 35%;}
             .content{width: 65%;}
-            .sidebar{height:250px;}
+            /* .sidebar2{width: 100%;} */
         }
 
         /* 넓은 화면(1200~) */
         @media (min-width: 1200px){
             .item{height: 100vh;}
-            .sidebar{width: 25%;}
+            .sidebar1{width: 25%;}
+            .sidebar2{width: 25%;}
             .content{width: 50%;}
-            .sidebar{width: 25%;}
         }
 
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="item sidebar">
+        <div class="item sidebar1">
             <h1>Sidebar1</h1>
         </div>
         <div class="item content">
             <h1>Content</h1>
         </div>
-        <div class="item sidebar">
+        <div class="item sidebar2">
             <h1>Sidebar2</h1>
         </div>
     </div>
