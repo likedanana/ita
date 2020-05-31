@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Column Drop</title>
     <style>
         div {
             /* 좁은 화면(~700)*/
@@ -15,6 +15,7 @@
             display: flex;
             flex-wrap: wrap;
         }
+
         .item{
             box-sizing: border-box;
             border: brown solid 1px;
@@ -23,30 +24,30 @@
 
         /* 중간 화면(700~1200) */
         @media (min-width: 700px){
-            .i1{width: 35%;}
-            .i2{width: 65%;}
-            .i3{height:250px;}
+            .sidebar{width: 35%;}
+            .content{width: 65%;}
+            .sidebar{height:250px;}
         }
 
         /* 넓은 화면(1200~) */
         @media (min-width: 1200px){
             .item{height: 100vh;}
-            .i1{width: 25%;}
-            .i2{width: 50%;}
-            .i3{width: 25%;}
+            .sidebar{width: 25%;}
+            .content{width: 50%;}
+            .sidebar{width: 25%;}
         }
 
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="item i1">
+        <div class="item sidebar">
             <h1>Sidebar1</h1>
         </div>
-        <div class="item i2">
+        <div class="item content">
             <h1>Content</h1>
         </div>
-        <div class="item i3">
+        <div class="item sidebar">
             <h1>Sidebar2</h1>
         </div>
     </div>
