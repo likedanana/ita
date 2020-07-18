@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세미나 등록하기</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>세미나 등록하기</h1>
+            <p>세미나 등록폼에 정보를 입력하면 하단 세미나 리스트에 추가됩니다.</p>
+        </div>
+    </header>
+
+    <article>
+        <div class="container">
+            <!-- CONTENT -->  
+            <div class="content">       
+                <div class="box">
+                    <div>세미나 주제 <span class="required">*</span></div>
+                    <div>
+                        <input type="text" name="title" placeholder="주제를 입력하세요">
+                        <span>( 0 / 200 )</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>참가비 <span class="required">*</span></div>
+                    <div>
+                        <label>
+                            <input type="radio" name="cost">
+                            <span>유료</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="cost">
+                            <span>무료</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>지역 <span class="required">*</span></div>
+                    <div>
+                        <div class="selection"></div>
+                        <select>
+                            <option></option>
+                            <option>서울</option>
+                            <option>경기</option>
+                            <option>인천</option>
+                            <option>대전</option>
+                            <option>강원</option>
+                            <option>충남</option>
+                            <option>충북</option>
+                            <option>경남</option>
+                            <option>경북</option>
+                            <option>전남</option>
+                            <option>전북</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="box">
+                    <div>직책 <span class="required">*</span></div>
+                    <div>
+                        <label>
+                            <input type="checkbox">
+                            <span>개발자</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>팀장</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>과장</span>
+                        </label>
+                        <label>
+                            <input type="checkbox">
+                            <span>부장</span>
+                        </label>
+                        <div class="etc">※ 다중선택 가능</div>
+                    </div>
+                </div>
+                <div class="box attach">
+                    <div>첨부</div>
+                    <div>
+                        <div class="attach-wrap">
+                            <div class="attached">파일첨부</div>
+                            <div class="attach-file">
+                                <input type="file" class="filecustom">
+                                <div class="bn-attach"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BTN -->
+                <div class="btn-group">
+                    <a href="#">등록</a>
+                </div>
+            </div>
+            <!-- LIST -->
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>세미나 주제</th>
+                            <th>직책</th>
+                            <th>지역</th>
+                            <th>참가비</th>
+                            <th>다운로드</th>
+                            <th>삭제</th>
+                        </tr>                
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!-- LIST END -->
+        </div>
+    </article>
+
+    <footer>
+        <div class="container">ⓒ 세미나 등록하기. All rights reserved.</div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
