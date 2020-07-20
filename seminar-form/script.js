@@ -36,7 +36,7 @@ let deleteFileA = document.querySelector('.ico-trash');
 
 fileInput.onchange = function (){
   if(fileInput.files.length != 0) {
-    fileNameDiv.innerHTML = '<a class="ico-trash"></a>' + fileInput.value.name;
+    fileNameDiv.innerHTML = '<a class="ico-trash"></a>' + fileInput.files[0].name;
     deleteFileA = document.querySelector('.ico-trash');
     deleteFileA.onclick = deleteFile;
   } else {
@@ -46,7 +46,7 @@ fileInput.onchange = function (){
 
 function deleteFile() {
   fileNameDiv.innerHTML = '파일첨부';
-  fileInput.value = '';
+  fileInput.value='';
 }
 
 // 2) 필수 입력 값 확인
