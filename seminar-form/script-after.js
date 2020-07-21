@@ -7,8 +7,9 @@ const titleLengthSpan = titleInput.nextElementSibling;
 // !!수정사항!! 
 // 주제가 200자까지만 입력되도록 수정했습니다.
 // maxlength에 대해 알려주셨는데 적용하지 못해 아쉬워요.
-// maxlength를 사용해 특정 상황(199자일 때 2자인 문자 입력)을 처리하기가 어려워??????????????????
-// Javascript로 글자수를 제한하는 방법을 사용했습니다.
+// maxlength를 사용해 특정 상황(199자일 때 2자인 문자 입력) 처리하기가 어려워서 
+// 이 부분은 공부할 시간이 조금 더 필요할 것 같아요.
+// 일단 Javascript로 글자수를 제한하는 방법을 사용했습니다. ^^
 
 titleInput.oninput = function(){
   let title = titleInput.value;
