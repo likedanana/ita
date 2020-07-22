@@ -1,20 +1,24 @@
 'use strict';
 
+// !!수정!!
+// let 과 const 사용
+// before : 기본적으로 const를 사용하고 값이 변경되는 경우에만 let 사용(prefer-const)
+// after : 기본적으로 let을 사용하고 값이 변경되지 않음을 명시할 경우에만 const 사용
+
 // 1) 200자 제한
 const titleInput = document.querySelector('input[name="title"]');
 const titleLengthSpan = titleInput.nextElementSibling;
 
-// !!수정사항!! 
+// !!수정!! 
 // 주제가 200자까지만 입력되도록 수정했습니다.
 // maxlength에 대해 알려주셨는데 적용하지 못해 아쉬워요.
-// maxlength를 사용해 특정 상황(199자일 때 2자인 문자 입력) 처리하기가 어려워서 
-// 이 부분은 공부할 시간이 조금 더 필요할 것 같아요.
-// 일단 Javascript로 글자수를 제한하는 방법을 사용했습니다. ^^
-
+// maxlength와 글자 수를 세는 방식이 다르다보니 글자수를 의도대로 제한하기가 어려워서 
+// 이 부분은 방법을 더 찾아보고 있습니다.
+// 일단은 Javascript로 글자수를 제한하는 방법을 사용했습니다. ^^
 titleInput.oninput = function(){
   let title = titleInput.value;
   let length = 0;
-  let lastCharIndex=0;
+  let lastCharIndex = 0;
   let wasAdded;
 
   for(let i=0; i<title.length; i++){
@@ -40,10 +44,9 @@ titleInput.oninput = function(){
       break;
     }
   }
-
+  console.dir(titleInput);
   titleLengthSpan.textContent = `( ${ length } / 200 )`;
 };
-
 
 // file
 const fileNameDiv = document.querySelector('.attached');
@@ -52,7 +55,7 @@ const fileInput = document.querySelector('input[type="file"]');
 fileInput.onchange = function (){
   if(fileInput.files.length != 0) {
     fileNameDiv.innerHTML = '<a class="ico-trash"></a>' + fileInput.files[0].name;
-    let deleteFileA = document.querySelector('.ico-trash');
+    const deleteFileA = document.querySelector('.ico-trash');
     deleteFileA.onclick = deleteFile;
   } else {
     deleteFile();
@@ -65,15 +68,14 @@ function deleteFile() {
 }
 
 // 2) 필수 입력 값 확인
-// !!수정사항!! 
+// !!수정!! 
 // if 문을 사용해 미입력 값이 여러개인 경우 모두 알려주도록 수정했습니다. 
 const radios = document.querySelectorAll('input[type="radio"]');
 const locationSelect = document.querySelector('select');
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-/*
+
 function checkRequired() {
   let checked = true;
-
   if( titleInput.value == '' ) {
     alert('주제를 입력하세요!');
     checked = false;
@@ -90,17 +92,15 @@ function checkRequired() {
     alert('직책을 선택하세요!');
     checked = false;
   }
-
   if( !checkedElem(checkboxes) ) checkboxes[0].focus();
   if( locationSelect.value == "" )locationSelect.focus();
   if( !checkedElem(radios) ) radios[0].focus();
   if( titleInput.value == "" ) titleInput.focus();
-
   return checked;
 }
-*/
-// 혹은 아래처럼 alert 창을 하나만 띄워도 좋을 것 같습니다.
 
+// 혹은 아래처럼 alert 창을 하나만 띄워도 좋을 것 같습니다.
+/* 
 function checkRequired() {
   let guide = '필수 입력 값(*)을 모두 입력하세요! \n(';
   let checked = true;
@@ -133,9 +133,11 @@ function checkRequired() {
 
   return checked;
 }
-
+*/
 
 // 3) 세미나 추가
+// !!수정!!
+// 직책을 문자열로 만들 때 join을 사용하도록 수정했습니다.
 const submitDiv = document.querySelector('.btn-group');
 
 submitDiv.onclick = function() {
@@ -171,7 +173,7 @@ const seminarsTbody = document.querySelector('tbody');
 tableDiv.style.display = 'none';
 
 function addSeminar(title, cost, location, position, file) {
-  const tr = document.createElement('tr');
+  let tr = document.createElement('tr');
   
   tr.insertAdjacentHTML( 'beforeend' , '<td class="title">' + title + '</td>');
   tr.insertAdjacentHTML( 'beforeend' , '<td>' + position + '</td>');
@@ -186,9 +188,8 @@ function addSeminar(title, cost, location, position, file) {
   tableDiv.style.display = '';
 }
 
-
-// !!수정사항!!
-// 행이 등록된 경우 input을 리셋했습니다.
+// !!수정!!
+// 행이 등록된 경우 input이 초기화되도록 수정했습니다.
 function resetForm() {
   titleInput.value = '';
   for(let radio of radios) radio.checked = false;
@@ -199,7 +200,7 @@ function resetForm() {
 
 // 4) 행 삭제
 seminarsTbody.onclick = function(event) {
-  const target = event.target;
+  let target = event.target;
   if(target.classList[0] != 'ico-trash') return;
 
   target.closest('tr').remove();
