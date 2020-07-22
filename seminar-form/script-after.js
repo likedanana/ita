@@ -33,9 +33,9 @@ titleInput.oninput = function(){
 
     // 200자 제한
     if( length == 201 && wasAdded == 2){
-      lastCharIndex = i-1;
-      length = length-2;
-      titleInput.value = title.slice(0, lastCharIndex + 1);
+      lastCharIndex = i;
+      length -= 2;
+      titleInput.value = title.slice(0, lastCharIndex);
       break;
     }
     if( length >= 200 ) { 
@@ -44,7 +44,7 @@ titleInput.oninput = function(){
       break;
     }
   }
-  console.dir(titleInput);
+
   titleLengthSpan.textContent = `( ${ length } / 200 )`;
 };
 
@@ -53,7 +53,7 @@ const fileNameDiv = document.querySelector('.attached');
 const fileInput = document.querySelector('input[type="file"]');
 
 fileInput.onchange = function (){
-  if(fileInput.files.length != 0) {
+  if( fileInput.files.length != 0 ) {
     fileNameDiv.innerHTML = '<a class="ico-trash"></a>' + fileInput.files[0].name;
     const deleteFileA = document.querySelector('.ico-trash');
     deleteFileA.onclick = deleteFile;
@@ -69,7 +69,7 @@ function deleteFile() {
 
 // 2) 필수 입력 값 확인
 // !!수정!! 
-// if 문을 사용해 미입력 값이 여러개인 경우 모두 알려주도록 수정했습니다. 
+// if 문을 사용해 미입력 값이 여러 개인 경우 모두 알려주도록 수정했습니다. 
 const radios = document.querySelectorAll('input[type="radio"]');
 const locationSelect = document.querySelector('select');
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -92,15 +92,17 @@ function checkRequired() {
     alert('직책을 선택하세요!');
     checked = false;
   }
+
   if( !checkedElem(checkboxes) ) checkboxes[0].focus();
   if( locationSelect.value == "" )locationSelect.focus();
   if( !checkedElem(radios) ) radios[0].focus();
   if( titleInput.value == "" ) titleInput.focus();
+  
   return checked;
 }
 
 // 혹은 아래처럼 alert 창을 하나만 띄워도 좋을 것 같습니다.
-/* 
+/*
 function checkRequired() {
   let guide = '필수 입력 값(*)을 모두 입력하세요! \n(';
   let checked = true;
@@ -155,11 +157,12 @@ submitDiv.onclick = function() {
   if(fileInput.files[0] != undefined) file = true;
 
   addSeminar(title, cost, location, position, file);
+
   resetForm();
 }
 
 // 요소 배열을 받아 체크된 요소가 있는지 확인합니다.
-// 체크된 요소가 하나라도 있으면 true, 없으면 false 반환합니다. 
+// 체크된 요소가 있으면 해당 요소를, 없으면 false 반환합니다. 
 function checkedElem(elems) {
   for(let elem of elems) {
     if( elem.checked ) return elem;
@@ -201,9 +204,9 @@ function resetForm() {
 // 4) 행 삭제
 seminarsTbody.onclick = function(event) {
   let target = event.target;
-  if(target.classList[0] != 'ico-trash') return;
+  if( target.classList[0] != 'ico-trash' ) return;
 
   target.closest('tr').remove();
   
-  if(seminarsTbody.children.length == 0) tableDiv.style.display = 'none';
+  if( seminarsTbody.children.length == 0 ) tableDiv.style.display = 'none';
 }
