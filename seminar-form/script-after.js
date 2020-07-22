@@ -75,35 +75,6 @@ const locationSelect = document.querySelector('select');
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
 function checkRequired() {
-  let checked = true;
-  if( titleInput.value == '' ) {
-    alert('주제를 입력하세요!');
-    checked = false;
-  }
-  if( !checkedElem(radios) ) {
-    alert('참가비를 선택하세요!');
-    checked = false;
-  }
-  if( locationSelect.value == '' ) {
-    alert('지역을 선택하세요!');
-    checked = false;
-  }
-  if( !checkedElem(checkboxes) ) {
-    alert('직책을 선택하세요!');
-    checked = false;
-  }
-
-  if( !checkedElem(checkboxes) ) checkboxes[0].focus();
-  if( locationSelect.value == "" )locationSelect.focus();
-  if( !checkedElem(radios) ) radios[0].focus();
-  if( titleInput.value == "" ) titleInput.focus();
-  
-  return checked;
-}
-
-// 혹은 아래처럼 alert 창을 하나만 띄워도 좋을 것 같습니다.
-/*
-function checkRequired() {
   let guide = '필수 입력 값(*)을 모두 입력하세요! \n(';
   let checked = true;
 
@@ -135,7 +106,6 @@ function checkRequired() {
 
   return checked;
 }
-*/
 
 // 3) 세미나 추가
 // !!수정!!
