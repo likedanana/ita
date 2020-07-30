@@ -71,7 +71,6 @@ section .items{
 }
 
 section .items li{
-  /* erase */
   background-color: #fff;
   display: flex;
   align-items: center;
