@@ -1,17 +1,17 @@
 'use strict';
 
 class Cloth{
-  constructor(type, color, jender, size){
+  constructor(type, color, gender, size){
     this.type = type;
     this.color = color;
-    this.jender = jender;
+    this.gender = gender;
     this.size = size;
   }
   
   getLi(){
     let itemLi = document.createElement('li');
     itemLi.innerHTML = 
-    `<img src="imgs/${this.color}_${this.type[0]}.png" alt="${this.color} ${this.type}">${this.jender}, ${this.size} size`;
+    `<img src="imgs/${this.color}_${this.type[0]}.png" alt="${this.color} ${this.type}">${this.gender}, ${this.size} size`;
     return itemLi;  
   }
 }
