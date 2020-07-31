@@ -22,6 +22,7 @@ button, button:focus{
 
 header{
   margin-top: 80px;
+   min-width: 440px;
 }
 
 header .logo::before{
