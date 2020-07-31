@@ -46,10 +46,12 @@ addClothesToUl( itemsUl, clothes );
 
 const categoryUl = document.querySelector(".category");
 categoryUl.onclick = function(event) {
-  itemsUl.innerHTML="";
-
   let key = event.target.dataset.key;
   let clicked = event.target.dataset.clicked;
+
+  if( key == undefined && clicked == undefined ) return;
+  
+  itemsUl.innerHTML="";
 
   let filteredClothes = clothes.filter( cloth => cloth[key] == clicked );
   addClothesToUl( itemsUl, filteredClothes );
