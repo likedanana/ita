@@ -44,8 +44,8 @@ clothes.push(new Cloth('skirt', 'yellow', 'female', 'small'));
 const itemsUl = document.querySelector(".items");
 addClothesToUl( itemsUl, clothes );
 
-const typesUl = document.querySelector(".category");
-typesUl.onclick = function(event) {
+const categoryUl = document.querySelector(".category");
+categoryUl.onclick = function(event) {
   itemsUl.innerHTML="";
 
   let key = event.target.dataset.key;
