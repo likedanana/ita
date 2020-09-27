@@ -1,0 +1,30 @@
+:root{
+/* Color */
+--black-color:#222;
+--white-color:#fff;
+--blue-color:#6464c8;
+--red-color:#ff0000;
+--dark-grey-color:#555;
+--grey-color:#bbb;
+--light-grey-color:#ddd;
+
+/*width*/
+--max-width:1024px;
+}
+
+*{padding:0; margin:0; box-sizing:border-box; word-break:keep-all; font-family:맑은고딕;}
+
+body{text-align:center;}
+ul{list-style:none;}
+a, a:hover{color:var(--black-color); text-decoration:none;}
+button, input[type="submit"]{border:none; background-color:#fff; cursor:pointer;}
+textarea{border:none; resize:none;}
+input:focus, button:focus, textarea:focus{outline:none;}
+
+/* nav */
+nav{font-size:18px; margin:50px 0px; text-align:center;}
+nav ul li{display:inline; margin:10px;}
+nav ul li a.clicked{font-weight:bolder; border-bottom:solid var(--red-color) 4px;}
+
+/* container */
+.container{display:inline-block; margin:0 auto; padding:0 20px; width:100%; max-width:var(--max-width);}

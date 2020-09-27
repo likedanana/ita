@@ -1,0 +1,9 @@
+/* form */
+input, textarea{border:solid var(--light-grey-color) 1px;}
+input[name="title"]{width:100%; padding:12px 10px; font-size:16px; font-weight:bold;}
+input[name="title"]::placeholder{color:var(--grey-color); font-weight:bolder;}
+textarea{width:100%; margin-top:10px; padding:15px; font-size:15px; line-height:36px;}
+input[type="submit"]{
+  margin-top:40px; padding:15px 40px; border:solid var(--dark-grey-color) 2px; border-radius:50px;
+  font-size:16px; font-weight:bold;
+}
