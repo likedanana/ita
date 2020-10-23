@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-10-23T04:14:48.141Z" agent="5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="aPSUTW1eLDlx5qn5d8VJ" version="13.8.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-10-23T04:25:08.535Z" agent="5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36" etag="K8z4eiVQ46OX7p01sFsP" version="13.8.1" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="813" dy="454" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -92,12 +92,12 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="ND9n42p7rbxdLXG1xanT-26" value="제목" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="220" y="610" width="80" height="60" as="geometry" />
+          <mxGeometry x="220" y="590" width="80" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ND9n42p7rbxdLXG1xanT-30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="ND9n42p7rbxdLXG1xanT-29" target="ND9n42p7rbxdLXG1xanT-4" edge="1">
+        <mxCell id="ND9n42p7rbxdLXG1xanT-30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;endArrow=none;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="ND9n42p7rbxdLXG1xanT-29" target="ND9n42p7rbxdLXG1xanT-4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="480" y="610" />
+              <mxPoint x="480" y="620" />
               <mxPoint x="480" y="560" />
             </Array>
           </mxGeometry>
@@ -122,7 +122,7 @@
         <mxCell id="ND9n42p7rbxdLXG1xanT-32" value="좋아요 수" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="500" y="430" width="80" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="2rQUQkz2bnJ6oHDl-8J2-1" target="ND9n42p7rbxdLXG1xanT-4">
+        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="2rQUQkz2bnJ6oHDl-8J2-1" target="ND9n42p7rbxdLXG1xanT-4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="310" y="670" />
@@ -130,10 +130,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-1" value="한 문장" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-1" value="한 문장" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="270" y="690" width="80" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="2rQUQkz2bnJ6oHDl-8J2-2" target="ND9n42p7rbxdLXG1xanT-4">
+        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="2rQUQkz2bnJ6oHDl-8J2-2" target="ND9n42p7rbxdLXG1xanT-4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="450" y="670" />
@@ -141,8 +141,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-2" value="깨달음" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="2rQUQkz2bnJ6oHDl-8J2-2" value="깨달음" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="410" y="690" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IWPvvH_QA-6SIcIoiqne-1" value="속성에 들어갈 데이터의 예)&lt;br&gt;&lt;br&gt;* 주제&lt;br&gt;사랑&lt;br&gt;&lt;br&gt;* 한 문장&lt;br&gt;인생에 있어서 최고의 행복은 우리가 사랑받고 있음을 확신하는 것이다.&lt;br&gt;&lt;br&gt;* 화자&amp;nbsp;&lt;br&gt;프랑스 소설가 겸 극작가, 빅토르 위고&lt;br&gt;&lt;br&gt;* 깨달음&lt;br&gt;하늘 아버지 어머니께 아낌없는 사랑을 받고 있으니 우리는 이 세상에서 최고로 행복한 사람들입니다." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="520" y="840" width="280" height="220" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
