@@ -102,7 +102,7 @@ const sceneInfo = [
   {
     // 3
     type:'sticky',
-    heightNum: 5,
+    heightNum: 6,
     scrollHeight: 0,
     objs: {
       container: document.querySelector('#scroll-section-3'),
