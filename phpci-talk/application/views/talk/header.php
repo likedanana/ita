@@ -8,6 +8,7 @@
   <title><?=$title?></title>
 </head>
 <body>
+  <header><span class="nickname"><?=$_SESSION['nickname']?>님</span><button class="logout">로그아웃</button></header>
   <nav>
     <ul>
       <li><a href="">학과공지</a></li>
@@ -18,3 +19,8 @@
       <li><a href="">Moodle</a></li>
     </ul>
   </nav>
+  <script>
+    document.querySelector('.logout').addEventListener('click', function(){
+      window.location.href = 'http://localhost/index.php/talk/login';
+    });
+  </script>
