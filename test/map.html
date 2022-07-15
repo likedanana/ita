@@ -7,6 +7,7 @@
         <title>Document</title>
     </head>
     <body>
+        <h3>지도앱 검색</h3>
         <span>검색어 : 성남대로 997</span>
         <br />
         <a onclick="searchOrInstallMapApp(`성남대로 997`, 'tmap')">티맵</a>
@@ -34,23 +35,70 @@
         <br />
         <a href="geo:?q=성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)">지도앱 (안드로이드만)</a>
 
+        <br />
+        <br />
+
+        <h3>지도앱 검색(미설치 시 설치페이지 이동)</h3>
+        <span>검색어 : 성남대로 997</span>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997`, 'tmap', true)">티맵</a>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997`, 'googlemap', true)">구글지도</a>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997`, 'navermap', true)">네이버지도</a>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997`, 'kakaomap', true)">카카오지도</a>
+
+        <br />
+        <br />
+
+        <span>검색어 : 성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)</span>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)`, 'tmap', true)">티맵</a>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)`, 'googlemap', true)">구글지도</a>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)`, 'navermap', true)">네이버지도</a>
+        <br />
+        <a onclick="searchOrInstallMapApp(`성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)`, 'kakaomap', true)">카카오지도</a>
+
+        <br />
+        <br />
+
+        <h3>안드로이드 - 설치된 지도앱 중 선택 혹은 기본 지도앱으로 연결</h3>
+        <span>검색어 : 성남대로 997</span>
+        <a href="geo:?q=성남대로 997">지도앱(안드로이드만)</a>
+
+        <br />
+        <br />
+
+        <span>검색어 : 성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)</span>
+        <br />
+        <a href="geo:?q=성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)">지도앱 (안드로이드만)</a>
+
         <script>
-            function searchOrInstallMapApp(query, appName = 'tmap') {
+            function searchMapApp(query, appName = 'tmap', install = false) {
                 const OS = getOS();
                 const app = getAppInfo(appName);
                 const urlScheme = `${app.scheme}://${app.path}`.replace('QUERY', query);
 
                 if (OS === 'iOS') {
                     const clickedAt = +new Date();
-                    setTimeout(function () {
-                        if (+new Date() - clickedAt < 2000) {
-                            location = `https://apps.apple.com/app/id${app.iOSAppId}`;
-                        }
-                    }, 1500);
+                    if (install) {
+                        setTimeout(function () {
+                            if (+new Date() - clickedAt < 2000) {
+                                location = `https://apps.apple.com/app/id${app.iOSAppId}`;
+                            }
+                        }, 1500);
+                    }
                     location = urlScheme;
                 } else if (OS === 'Android') {
-                    const intentUrlScheme = `intent://${app.path}#Intent;scheme=${app.scheme};package=${app.androidPackage};end`.replace('QUERY', query);
-                    location = intentUrlScheme;
+                    if (install) {
+                        const intentUrlScheme = `intent://${app.path}#Intent;scheme=${app.scheme};package=${app.androidPackage};end`.replace('QUERY', query);
+                        location = intentUrlScheme;
+                    } else {
+                        location = urlScheme;
+                    }
                 }
             }
 
