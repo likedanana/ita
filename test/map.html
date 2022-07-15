@@ -72,6 +72,14 @@
         <h3>앱 설치 확인</h3>
         <span>검색어 : 성남대로 997</span>
         <br />
+        <a href="intent://search?query=성남대로 997#Intent;scheme=nmap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.nmap;end"
+            >티맵(intentURL)</a
+        >
+        <br />
+        <a href="intent://search?query=성남대로 997#Intent;scheme=kakaomap;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;package=com.nhn.android.kakaomap;end"
+            >카카오지도(intentURL)</a
+        >
+        <br />
         <a onclick="checkAppInstalled('tmap://search?name=성남대로 997')">티맵</a>
         <br />
         <a onclick="checkAppInstalled('kakaomap://search?q=성남대로 997')">카카오지도</a>
@@ -80,9 +88,9 @@
             function checkAppInstalled(url) {
                 const now = new Date().valueOf();
                 setTimeout(function () {
-                    if (new Date().valueOf() - now > 350) return;
+                    if (new Date().valueOf() - now > 1500) return;
                     alert('앱이 설치되지 않음');
-                }, 300);
+                }, 800);
                 window.location = url;
             }
         </script>
