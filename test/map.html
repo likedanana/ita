@@ -78,7 +78,7 @@
                 const now = new Date().valueOf();
                 setTimeout(function () {
                     if (new Date().valueOf() - now > 100) return;
-                    window.location = 'https://itunes.apple.com/appdir';
+                    alert('앱이 설치되지 않음');
                 }, 25);
                 window.location = url;
             }
