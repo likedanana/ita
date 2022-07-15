@@ -7,21 +7,6 @@
         <title>Document</title>
     </head>
     <body>
-        <h1>url scheme과 intent url</h1>
-        <xmp>
-    url scheme
-    <a href="tmap://search?name=성남대로 997">티맵</a>
-    <a href="nmap://search?query=성남대로 997">네이버지도</a>
-    <a href="kakaomap://search?q=성남대로 997">카카오지도</a>
-
-    intent url
-    <a href="intent://search?name=성남대로 997#Intent;scheme=tmap;package=com.skt.tmap.ku;end">티맵</a>
-    <a href="intent://search?query=성남대로 997#Intent;scheme=nmap;package=com.nhn.android.nmap;end">네이버지도</a>
-    <a href="intent://search?q=성남대로 997#Intent;scheme=kakaomap;package=net.daum.android.map;end">카카오지도</a>
-        </xmp>
-
-        <h1>적용</h1>
-
         <h3>지도앱 검색</h3>
         <span>검색어 : 성남대로 997</span>
         <br />
@@ -78,6 +63,22 @@
         <span>검색어 : 성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)</span>
         <br />
         <a href="geo:?q=성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)">지도앱 (안드로이드만)</a>
+
+        <br />
+        <br />
+
+        <h3>[참고]url scheme의 구조</h3>
+        <xmp>
+    url scheme
+    <a href="tmap://search?name=성남대로 997">티맵</a>
+    <a href="nmap://search?query=성남대로 997">네이버지도</a>
+    <a href="kakaomap://search?q=성남대로 997">카카오지도</a>
+
+    intent url
+    <a href="intent://search?name=성남대로 997#Intent;scheme=tmap;package=com.skt.tmap.ku;end">티맵</a>
+    <a href="intent://search?query=성남대로 997#Intent;scheme=nmap;package=com.nhn.android.nmap;end">네이버지도</a>
+    <a href="intent://search?q=성남대로 997#Intent;scheme=kakaomap;package=net.daum.android.map;end">카카오지도</a>
+        </xmp>
 
         <script>
             function searchMapApp(query, appName = 'tmap', install = false) {
