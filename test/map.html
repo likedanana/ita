@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
         <h3>새 창에서 열기</h3>
         <span>검색어 : 성남대로 997</span>
         <br />
@@ -66,5 +65,23 @@
         <a href="nmap://search?query=성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)">네이버지도</a>
         <br />
         <a href="kakaomap://search?q=성남대로 997, 성남시청 3,4층 / 담당자 홍길동 010-4000-7000 / 031-400-4000 (경기광주)">카카오지도</a>
-</body>
+
+        <br />
+        <br />
+
+        <h3>앱 설치 확인</h3>
+        <br />
+        <a onclick="checkAppInstalled('tmap://search?name=성남대로 997')">티맵</a>
+
+        <script>
+            function checkAppInstalled(url) {
+                const now = new Date().valueOf();
+                setTimeout(function () {
+                    if (new Date().valueOf() - now > 100) return;
+                    window.location = 'https://itunes.apple.com/appdir';
+                }, 25);
+                window.location = url;
+            }
+        </script>
+    </body>
 </html>
