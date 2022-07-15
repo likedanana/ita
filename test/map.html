@@ -80,7 +80,7 @@
             function checkAppInstalled(url) {
                 const now = new Date().valueOf();
                 setTimeout(function () {
-                    if (new Date().valueOf() - now > 1500) return;
+                    if (new Date().valueOf() - now > 500) return;
                     alert('앱이 설치되지 않음');
                 }, 300);
                 window.location = url;
