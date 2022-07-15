@@ -77,7 +77,7 @@
             function checkAppInstalled(url) {
                 const now = new Date().valueOf();
                 setTimeout(function () {
-                    if (new Date().valueOf() - now > 100) return;
+                    if (new Date().valueOf() - now > 1000) return;
                     alert('앱이 설치되지 않음');
                 }, 25);
                 window.location = url;
