@@ -11,7 +11,6 @@
         margin-top: 10px;
       }
     </style>
-    <script src="/scripts/axios.js"></script>
   </head>
   <body>
     <div>
@@ -19,8 +18,7 @@
       <button id="recordEnd">녹음 종료</button>
     </div>
     <audio id="audio" controls></audio>
-    <button id="save">저장</button>
-    <script src="/recorder.js"></script>
+    <script src="./recorder.js"></script>
     <script>
       (async () => {
         let recorder;
@@ -50,13 +48,6 @@
             var url = URL.createObjectURL(blob);
             document.querySelector("audio").src = url;
         })
-      }
-
-      // 저장 버튼
-      save.onclick = () => {
-          const formData = new FormData();
-          formData.append('audio', file)
-          axios.post('/record/create', formData);
       }
     })();
     </script>
