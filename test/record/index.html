@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Recording</title>
+    <style>
+      body > *:not(script){
+        display: block;
+        margin-top: 10px;
+      }
+    </style>
+    <script src="/scripts/axios.js"></script>
+  </head>
+  <body>
+    <div>
+      <button id="recordStart">녹음 시작</button>
+      <button id="recordEnd">녹음 종료</button>
+    </div>
+    <audio id="audio" controls></audio>
+    <script>
+      (async () => {
+        // 마이크에서 MediaStream 객체 취득
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+
+        // MediaRecorder 객체 생성
+        const mediaRecorder = new MediaRecorder(mediaStream);
+        const audioArray = [];
+        let file;
+
+        // 이벤트리스너 - 녹음 중
+        mediaRecorder.ondataavailable = (e) => {
+          audioArray.push(event.data);
+        };
+
+        // 이벤트리스너 - 녹음 종료
+        mediaRecorder.onstop = (e) => {
+          file = new File(
+            audioArray,
+            'filename.mp3', // clientExt로 전달
+            {type:'audio/mp3'} // 녹음 후 다운로드 시 확장자 결정
+            );
+
+          // url 생성
+          const blobURL = window.URL.createObjectURL(file);
+
+          // 재생
+          document.querySelector("audio").src = blobURL;
+        };
+
+        // 녹음 시작 버튼
+        recordStart.onclick = async () => {
+          // 녹음 시작
+          mediaRecorder.start();
+
+          // 기존 데이터 비우기
+          audioArray.splice(0);
+        };
+
+        // 녹음 종료 버튼
+        recordEnd.onclick = async () => {
+          mediaRecorder.stop();
+        };
+      })();
+    </script>
+  </body>
+</html>
