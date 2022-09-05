@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Recording</title>
+    <style>
+      body > *:not(script){
+        display: block;
+        margin-top: 10px;
+      }
+    </style>
+    <script src="/scripts/axios.js"></script>
+  </head>
+  <body>
+    <div>
+      <button id="recordStart">녹음 시작</button>
+      <button id="recordEnd">녹음 종료</button>
+    </div>
+    <audio id="audio" controls></audio>
+    <button id="save">저장</button>
+    <script src="/recorder.js"></script>
+    <script>
+      (async () => {
+        let recorder;
+        let file;
+        // 마이크에서 MediaStream 객체 취득
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+
+        // audio context 생성
+        const audioContext = new AudioContext();
+        const input = audioContext.createMediaStreamSource(stream);
+        recorder = new Recorder(input);
+
+      // 녹음 시작
+      recordStart.onclick = () => {
+        recorder.record();
+      }
+
+      // 녹음 끝
+      recordEnd.onclick = () => {
+          recorder.stop();
+
+          recorder.exportWAV((blob) => {  
+            file = blob;
+
+            var url = URL.createObjectURL(blob);
+            document.querySelector("audio").src = url;
+        })
+      }
+
+      // 저장 버튼
+      save.onclick = () => {
+          const formData = new FormData();
+          formData.append('audio', file)
+          axios.post('/record/create', formData);
+      }
+    })();
+    </script>
+  </body>
+</html>
