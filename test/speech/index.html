@@ -133,37 +133,60 @@
           control.innerText = '■';
           control.classList = 'stop';
           recognition.start();
-        } else if (control.classList.item(0) === 'stop') {
-          // ■
+        }
+        // } else if (control.classList.item(0) === 'stop') {
+        //   // ■
+        //   control.innerText = '채점중...';
+        //   control.classList = 'grading';
+        //   wordBox.style.visibility = 'visible';
+        //   recognition.stop();
+        // } else if (control.classList.item(0) === 'grading') {
+        //   // 채점중...
+        //   control.innerText = '▶';
+        //   control.classList = 'play';
+        //   retry.style.display = 'inline';
+        // } else if (control.classList.item(0) === 'play') {
+        //   // ▶
+        // }
+      };
+
+      // 음성 > 텍스트 변환 시 호출, 끝난 경우 채점
+      recognition.onresult = (e) => {
+        if (e.results[0].isFinal) {
+          // 버튼 변경
           control.innerText = '채점중...';
           control.classList = 'grading';
+
+          // 변환된 텍스트 가져오기
+          const speech = Array.from(e.results)
+            .map((result) => result[0])
+            .map((result) => result.transcript)
+            .join('');
+
+          // 채점
+          const trimmedWords = sentence.toLowerCase().replaceAll('.', '').split(' ');
+          const speechWords = speech.toLowerCase().replaceAll('.', '').split(' ');
+          words.forEach((word, i) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.innerText = word;
+
+            const wordIndex = speechWords.indexOf(trimmedWords[i]);
+            if (wordIndex === -1) {
+              wordSpan.classList = 'wrong';
+            } else {
+              speechWords.splice(wordIndex, 1);
+            }
+
+            wordBox.append(wordSpan);
+          });
           wordBox.style.visibility = 'visible';
-          recognition.stop();
-        } else if (control.classList.item(0) === 'grading') {
-          // 채점중...
+
+          // 버튼 변경
           control.innerText = '▶';
           control.classList = 'play';
           retry.style.display = 'inline';
-        } else if (control.classList.item(0) === 'play') {
-          // ▶
         }
       };
-
-      // 음성 > 텍스트 변환 시
-      recognition.onresult = (e) => {
-        const transcript = Array.from(e.results)
-          .map((result) => result[0])
-          .map((result) => result.transcript)
-          .join('');
-
-        wordBox.innerText = transcript;
-      };
-
-      // words.forEach(word => {
-      // 	const wordSpan = document.createElement('span')
-      // 	wordSpan.innerText = word;
-      // 	wordBox.append(wordSpan);
-      // });
     </script>
   </body>
 </html>
