@@ -95,7 +95,7 @@
   </head>
   <body>
     <section>
-      <form action="/speech" method="GET">
+      <form action="/speech" method="GET" style="visibility: hidden">
         <input type="text" name="sentence" placeholder="문장을 입력하세요." />
         <button>🔎</button>
       </form>
@@ -119,12 +119,14 @@
       const synth = window.speechSynthesis;
       const msg = new SpeechSynthesisUtterance(sentence);
       sentencePlay.onclick = () => {
-        msg.voice = synth.getVoices().filter((voice) => voice.lang.includes('ko'))[0];
+        msg.voice = synth.getVoices().filter((voice) => voice.lang.includes('en'))[0];
         synth.speak(msg);
       };
 
       // 음성 인식
       const recognition = new webkitSpeechRecognition();
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
       control.onclick = () => {
         if (control.classList.item(0) === 'record') {
           // ◉
@@ -155,7 +157,6 @@
           .join('');
 
         wordBox.innerText = transcript;
-        // console.log(e.results);
       };
 
       // words.forEach(word => {
