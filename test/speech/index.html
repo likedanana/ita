@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Speech Recognition</title>
+	<style>
+		section {
+			position: relative;
+			max-width: 720px;
+			height: 97vh;
+			margin: 0 auto;
+		}
+
+		form {
+			border: 1px solid lightgray;
+			border-radius: 2px;
+		}
+		form * {
+			border: none;
+			background: none;
+			padding: 10px;
+			font-size: 16px;
+		}
+		form > [name='sentence'] {
+			width: 80%;
+		}
+		form > button {
+			float: right;
+		}
+
+		.sentence-box {
+			margin-top: 20vh;
+			text-align: center;
+		}
+		.sentence-box > span {
+			font-size: 50px;
+			font-weight: 600;
+			vertical-align: middle;
+		}
+		#sentencePlay {
+			font-size: 30px;
+			cursor: pointer;
+		}
+
+		#wordBox {
+			visibility: hidden;
+			text-align: center;
+			margin-top: 5vh;
+		}
+		#wordBox > span {
+			display: inline-block;
+			font-size: 35px;
+			margin: 0 8px;
+		}
+		#wordBox > .wrong {
+			text-decoration: line-through;
+			text-decoration-color: red;
+		}
+
+		.button-box {
+			width: 100%;
+			text-align: center;
+			position: absolute;
+			bottom: 0;
+			padding: 20px;
+		}
+		.button-box > * {
+			font-size: 70px;
+			margin: 0 5px;
+			cursor: pointer;
+		}
+		#retry {
+			display: none;
+			position: absolute;
+			left: 100px;
+		}
+		#control {
+			display: inline-block;
+			height: 120px;
+			vertical-align: baseline;
+		}
+		#control.record {
+			color: red;
+			font-size: 100px;
+			transform: translateY(-16px);
+		}
+		#control.grading {
+			color: #bbb;
+			font-size: 30px;
+			transform: translateY(36px);
+		}
+	</style>
+</head>
+<body>
+<section>
+	<form action="/speech" method="GET">
+		<input type="text" name="sentence" placeholder="문장을 입력하세요." />
+		<button>🔎</button>
+	</form>
+	<div class="sentence-box">
+		<span>복 많이 받으세요.</span>
+		<span id="sentencePlay">🔊</span>
+	</div>
+	<div id="wordBox"></div>
+	<div class="button-box">
+		<span id="retry" onclick="location.reload()">↺</span>
+		<div id="control" class="record">◉</div>
+	</div>
+</section>
+<script>
+	const sentence = `{{ request('sentence') }}`;
+	const words = sentence.split(' ');
+
+	// 음성 합성 🔊
+	const synth = window.speechSynthesis;
+	const msg = new SpeechSynthesisUtterance(sentence);
+	sentencePlay.onclick = () => {
+		msg.voice = synth.getVoices()[2];
+		synth.speak(msg);
+	}
+
+	// 음성 인식
+	const recognition = new webkitSpeechRecognition();
+	// recognition.lang = 'ko-KR';
+	control.onclick = () => {
+		if (control.classList.item(0) === 'record') {
+			// ◉
+			control.innerText = '■';
+			control.classList = 'stop';
+			recognition.start();
+		} else if(control.classList.item(0) === 'stop') {
+			// ■
+			control.innerText = '채점중...';
+			control.classList = 'grading';
+			recognition.stop();
+		} else if(control.classList.item(0) === 'grading') {
+			// 채점중...
+			control.innerText = '▶';
+			control.classList = 'play';
+			retry.style.display = 'inline';
+		} else if(control.classList.item(0) === 'play') {
+			// ▶
+		}
+	}
+
+	// 음성 > 텍스트 변환 시
+	recognition.onresult = e => {
+		console.log(e.results);
+	}
+
+	// words.forEach(word => {
+	// 	const wordSpan = document.createElement('span')
+	// 	wordSpan.innerText = word;
+	// 	wordBox.append(wordSpan);
+	// });
+</script>
+</body>
+</html>
