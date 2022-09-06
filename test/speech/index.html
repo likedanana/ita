@@ -101,7 +101,7 @@
       </form>
       <div class="sentence-box">
         <!-- <span>{{ request('sentence') }}</span> -->
-        <span>God bless you.</span>
+        <span>Did it appear from India, China or Japan? No.</span>
         <span id="sentencePlay">🔊</span>
       </div>
       <div id="wordBox"></div>
@@ -112,7 +112,7 @@
     </section>
     <script>
       //   const sentence = `{{ request('sentence') }}`;
-      const sentence = `God bless you.`;
+      const sentence = `Did it appear from India, China or Japan? No.`;
       const words = sentence.split(' ');
 
       // 음성 합성 🔊
@@ -164,8 +164,14 @@
             .join('');
 
           // 채점
-          const trimmedWords = sentence.toLowerCase().replaceAll('.', '').split(' ');
-          const speechWords = speech.toLowerCase().replaceAll('.', '').split(' ');
+          const trimmedWords = sentence
+            .toLowerCase()
+            .replaceAll(/[^a-z ]/g, '')
+            .split(' ');
+          const speechWords = speech
+            .toLowerCase()
+            .replaceAll(/[^a-z ]/g, '')
+            .split(' ');
           words.forEach((word, i) => {
             const wordSpan = document.createElement('span');
             wordSpan.innerText = word;
@@ -179,6 +185,10 @@
 
             wordBox.append(wordSpan);
           });
+
+          // 스피치 보기
+          wordBox.append(document.createElement('br'));
+          wordBox.append(speech);
           wordBox.style.visibility = 'visible';
 
           // 버튼 변경
