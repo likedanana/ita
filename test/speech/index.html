@@ -140,11 +140,7 @@
           control.classList = 'grading';
 
           // 채점
-          const result = recognition.stop();
-          alert(result);
-          if (result) {
-            speech += result[0].transcript;
-          }
+          recognition.stop();
 
           const trimmedWords = sentence
             .toLowerCase()
@@ -192,9 +188,12 @@
           speech += ' ';
         }
       };
-      recognition.onend = () => {
+      recognition.onend = (e) => {
         if (control.classList.contains('stop')) {
           recognition.start();
+        } else {
+          alert(e.results);
+          alert(e.result);
         }
       };
     </script>
