@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Speech Recognition</title>
+    <title>Speech Synthesis & Recognition</title>
     <style>
       section {
         position: relative;
@@ -114,8 +114,9 @@
       //   const sentence = `{{ request('sentence') }}`;
       const sentence = `Did it appear from India, China or Japan? No.`;
       const words = sentence.split(' ');
+      let speech = '';
 
-      // 음성 합성 🔊
+      // 🔊 음성 합성
       const synth = window.speechSynthesis;
       const msg = new SpeechSynthesisUtterance(sentence);
       sentencePlay.onclick = () => {
@@ -123,45 +124,21 @@
         synth.speak(msg);
       };
 
-      // 음성 인식
+      // ◉ 음성 인식
       const recognition = new webkitSpeechRecognition();
       recognition.interimResults = true;
       recognition.lang = 'en-US';
       control.onclick = () => {
         if (control.classList.item(0) === 'record') {
           // ◉
+          recognition.start();
           control.innerText = '■';
           control.classList = 'stop';
-          recognition.start();
-        }
-        // } else if (control.classList.item(0) === 'stop') {
-        //   // ■
-        //   control.innerText = '채점중...';
-        //   control.classList = 'grading';
-        //   wordBox.style.visibility = 'visible';
-        //   recognition.stop();
-        // } else if (control.classList.item(0) === 'grading') {
-        //   // 채점중...
-        //   control.innerText = '▶';
-        //   control.classList = 'play';
-        //   retry.style.display = 'inline';
-        // } else if (control.classList.item(0) === 'play') {
-        //   // ▶
-        // }
-      };
-
-      // 음성 > 텍스트 변환 시 호출, 끝난 경우 채점
-      recognition.onresult = (e) => {
-        if (e.results[0].isFinal) {
-          // 버튼 변경
+        } else if (control.classList.item(0) === 'stop') {
+          // ■
+          recognition.stop();
           control.innerText = '채점중...';
           control.classList = 'grading';
-
-          // 변환된 텍스트 가져오기
-          const speech = Array.from(e.results)
-            .map((result) => result[0])
-            .map((result) => result.transcript)
-            .join('');
 
           // 채점
           const trimmedWords = sentence
@@ -185,17 +162,33 @@
 
             wordBox.append(wordSpan);
           });
+          wordBox.style.visibility = 'visible';
 
-          // 스피치 보기
+          // 참고 - 스피치 보기
+          wordBox.append(document.createElement('br'));
           wordBox.append(document.createElement('br'));
           wordBox.append(speech);
-          wordBox.style.visibility = 'visible';
 
           // 버튼 변경
           control.innerText = '▶';
           control.classList = 'play';
           retry.style.display = 'inline';
         }
+      };
+
+      // 음성 > 텍스트 변환 시 호출
+      recognition.onresult = (e) => {
+        if (e.results[0].isFinal) {
+          // 문장이 종료되었으면
+          speech += Array.from(e.results)
+            .map((result) => result[0])
+            .map((result) => result.transcript)
+            .join('');
+          speech += ' ';
+        }
+      };
+      recognition.onend = () => {
+        recognition.start();
       };
     </script>
   </body>
