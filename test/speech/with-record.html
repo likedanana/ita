@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Speech Synthesis & Recognition</title>
+    <style>
+      section {
+        position: relative;
+        max-width: 720px;
+        height: 97vh;
+        margin: 0 auto;
+      }
+
+      form {
+        border: 1px solid lightgray;
+        border-radius: 2px;
+      }
+      form * {
+        border: none;
+        background: none;
+        padding: 10px;
+        font-size: 16px;
+      }
+      form > [name='sentence'] {
+        width: 80%;
+      }
+      form > button {
+        float: right;
+      }
+
+      .sentence-box {
+        margin-top: 20vh;
+        text-align: center;
+      }
+      .sentence-box > span {
+        font-size: 50px;
+        font-weight: 600;
+        vertical-align: middle;
+      }
+      #sentencePlay {
+        font-size: 30px;
+        cursor: pointer;
+      }
+
+      #wordBox {
+        visibility: hidden;
+        text-align: center;
+        margin-top: 5vh;
+      }
+      #wordBox > span {
+        display: inline-block;
+        font-size: 35px;
+        margin: 0 8px;
+      }
+      #wordBox > .wrong {
+        text-decoration: line-through;
+        text-decoration-color: red;
+      }
+
+      .button-box {
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        padding: 20px;
+      }
+      .button-box > * {
+        font-size: 70px;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      #retry {
+        display: none;
+        position: absolute;
+        left: 100px;
+      }
+      #control {
+        display: inline-block;
+        height: 120px;
+        vertical-align: baseline;
+      }
+      #control.record {
+        color: red;
+        font-size: 100px;
+        transform: translateY(-16px);
+      }
+      #control.grading {
+        color: #bbb;
+        font-size: 30px;
+        transform: translateY(36px);
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <form action="/speech" method="GET" style="visibility: hidden">
+        <input type="text" name="sentence" placeholder="문장을 입력하세요." />
+        <button>🔎</button>
+      </form>
+      <div class="sentence-box">
+        <!-- <span>{{ request('sentence') }}</span> -->
+        <span>Did it appear from India, China or Japan? No.</span>
+        <span id="sentencePlay">🔊</span>
+      </div>
+      <div id="wordBox"></div>
+      <div class="button-box">
+        <span id="retry" onclick="location.reload()">↺</span>
+        <div id="control" class="record">◉</div>
+      </div>
+    </section>
+    <audio id="audio" style="display: none"></audio>
+    <script src="../record/recorder.js"></script>
+    <!-- <script src="/public/scripts/recorder.js"></script> -->
+    <script>
+      //   const sentence = `{{ request('sentence') }}`;
+      let recorder;
+
+      const sentence = `Did it appear from India, China or Japan? No.`;
+      const words = sentence.split(' ');
+      const speeches = [];
+      let speech = '';
+
+      // 🔊 음성 합성
+      const synth = window.speechSynthesis;
+      const msg = new SpeechSynthesisUtterance(sentence);
+      sentencePlay.onclick = () => {
+        msg.voice = synth.getVoices().filter((voice) => voice.lang.includes('en'))[0];
+        synth.speak(msg);
+      };
+
+      // ◉ 음성 인식 및 녹음
+      const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+      control.onclick = async () => {
+        if (control.classList.contains('record')) {
+          // ◉
+          control.innerText = '■';
+          control.classList = 'stop';
+
+          // 녹음
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          const audioContext = new AudioContext();
+          const input = audioContext.createMediaStreamSource(stream);
+          recorder = new Recorder(input);
+          recorder.record();
+
+          // 인식
+          recognition.start();
+        } else if (control.classList.contains('stop')) {
+          // ■
+          control.innerText = '채점중...';
+          control.classList = 'grading';
+
+          // 녹음
+          recorder.stop();
+          recorder.exportWAV((blob) => {
+            audio.src = URL.createObjectURL(blob);
+          });
+
+          // 인식
+          await new Promise((f) => setTimeout(f, 1000));
+          recognition.stop();
+          speeches.push(speech);
+          const finalSpeech = speeches.join(' ');
+
+          // 채점
+          const trimmedWords = sentence
+            .toLowerCase()
+            .replaceAll(/[^a-z ]/g, '')
+            .split(' ');
+          const speechWords = finalSpeech
+            .toLowerCase()
+            .replaceAll(/[^a-z ]/g, '')
+            .split(' ');
+          words.forEach((word, i) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.innerText = word;
+            const wordIndex = speechWords.indexOf(trimmedWords[i]);
+            if (wordIndex === -1) {
+              wordSpan.classList = 'wrong';
+            } else {
+              speechWords.splice(wordIndex, 1);
+            }
+            wordBox.append(wordSpan);
+          });
+          wordBox.style.visibility = 'visible';
+
+          // 참고 - 스피치 보기
+          wordBox.append(document.createElement('br'));
+          wordBox.append(document.createElement('br'));
+          wordBox.append(finalSpeech);
+
+          // 버튼 변경
+          control.innerText = '▶';
+          control.classList = 'play';
+          retry.style.display = 'inline';
+        } else if (control.classList.contains('play')) {
+          audio.play();
+        }
+      };
+
+      // 음성 > 텍스트 변환 시 호출
+      recognition.onresult = (e) => {
+        speech = Array.from(e.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join('');
+        if (e.results[0].isFinal) {
+          // 문장 종료 시
+          speeches.push(speech);
+          speech = '';
+        }
+      };
+      recognition.onend = (e) => {
+        if (control.classList.contains('stop')) {
+          recognition.start();
+        }
+      };
+    </script>
+  </body>
+</html>
