@@ -136,11 +136,13 @@
           control.classList = 'stop';
         } else if (control.classList.item(0) === 'stop') {
           // ■
-          recognition.stop();
           control.innerText = '채점중...';
           control.classList = 'grading';
 
           // 채점
+          const result = recognition.stop();
+          speech += result?.transcript ?? '';
+
           const trimmedWords = sentence
             .toLowerCase()
             .replaceAll(/[^a-z ]/g, '')
@@ -187,12 +189,7 @@
           speech += ' ';
         }
       };
-      recognition.onend = (e) => {
-        speech += Array.from(e.results)
-          .map((result) => result[0])
-          .map((result) => result.transcript)
-          .join('');
-        speech += ' ';
+      recognition.onend = () => {
         recognition.start();
       };
     </script>
