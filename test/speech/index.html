@@ -136,12 +136,11 @@
           control.classList = 'stop';
         } else if (control.classList.contains('stop')) {
           // ■
+          recognition.stop();
           control.innerText = '채점중...';
           control.classList = 'grading';
 
           // 채점
-          recognition.stop();
-
           const trimmedWords = sentence
             .toLowerCase()
             .replaceAll(/[^a-z ]/g, '')
