@@ -189,6 +189,7 @@
         if (e.results[0].isFinal) {
           // 문장이 종료되었으면
           speeches.push(speech);
+          speech = '';
         }
       };
       recognition.onend = (e) => {
