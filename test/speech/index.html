@@ -152,14 +152,12 @@
           words.forEach((word, i) => {
             const wordSpan = document.createElement('span');
             wordSpan.innerText = word;
-
             const wordIndex = speechWords.indexOf(trimmedWords[i]);
             if (wordIndex === -1) {
               wordSpan.classList = 'wrong';
             } else {
               speechWords.splice(wordIndex, 1);
             }
-
             wordBox.append(wordSpan);
           });
           wordBox.style.visibility = 'visible';
