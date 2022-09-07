@@ -71,11 +71,6 @@
         margin: 0 5px;
         cursor: pointer;
       }
-      #retry {
-        display: none;
-        position: absolute;
-        left: 100px;
-      }
       #control {
         display: inline-block;
         height: 120px;
@@ -106,7 +101,6 @@
       </div>
       <div id="wordBox"></div>
       <div class="button-box">
-        <span id="retry" onclick="location.reload()">↺</span>
         <div id="control" class="record">◉</div>
       </div>
     </section>
@@ -176,13 +170,13 @@
           wordBox.append(finalSpeech);
 
           // 버튼 변경
-          control.innerText = '▶';
-          control.classList = 'play';
-          retry.style.display = 'inline';
+          control.innerText = '↺';
+          control.classList = 'retry';
+          control.onclick = () => location.reload();
         }
       };
 
-      // 음성 > 텍스트 변환 시 호출
+      // ◉ 음성 인식 - 이벤트 리스너
       recognition.onresult = (e) => {
         speech = Array.from(e.results)
           .map((result) => result[0])
