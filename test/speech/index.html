@@ -110,9 +110,13 @@
         <div id="control" class="record">◉</div>
       </div>
     </section>
+    <audio id="audio" style="display: none"></audio>
     <script src="../record/recorder.js"></script>
+    <!-- <script src="/public/scripts/recorder.js"></script> -->
     <script>
       //   const sentence = `{{ request('sentence') }}`;
+      let recorder;
+
       const sentence = `Did it appear from India, China or Japan? No.`;
       const words = sentence.split(' ');
       const speeches = [];
@@ -126,24 +130,41 @@
         synth.speak(msg);
       };
 
-      // ◉ 음성 인식
+      // ◉ 음성 인식 및 녹음
       const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
       recognition.interimResults = true;
       recognition.lang = 'en-US';
       control.onclick = async () => {
         if (control.classList.contains('record')) {
           // ◉
-          recognition.start();
           control.innerText = '■';
           control.classList = 'stop';
+
+          // 녹음
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          const audioContext = new AudioContext();
+          const input = audioContext.createMediaStreamSource(stream);
+          recorder = new Recorder(input);
+          recorder.record();
+
+          // 인식
+          recognition.start();
         } else if (control.classList.contains('stop')) {
           // ■
           control.innerText = '채점중...';
           control.classList = 'grading';
 
+          // 녹음
+          recorder.stop();
+          recorder.exportWAV((blob) => {
+            audio.src = URL.createObjectURL(blob);
+          });
+
+          // 인식
           await new Promise((f) => setTimeout(f, 1000));
           recognition.stop();
-
           speeches.push(speech);
           const finalSpeech = speeches.join(' ');
 
@@ -178,6 +199,8 @@
           control.innerText = '▶';
           control.classList = 'play';
           retry.style.display = 'inline';
+        } else if (control.classList.contains('play')) {
+          audio.play();
         }
       };
 
