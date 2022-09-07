@@ -129,12 +129,12 @@
       recognition.interimResults = true;
       recognition.lang = 'en-US';
       control.onclick = () => {
-        if (control.classList.item(0) === 'record') {
+        if (control.classList.contains('record')) {
           // ◉
           recognition.start();
           control.innerText = '■';
           control.classList = 'stop';
-        } else if (control.classList.item(0) === 'stop') {
+        } else if (control.classList.contains('stop')) {
           // ■
           control.innerText = '채점중...';
           control.classList = 'grading';
@@ -192,7 +192,9 @@
         }
       };
       recognition.onend = () => {
-        recognition.start();
+        if (control.classList.contains('record')) {
+          recognition.start();
+        }
       };
     </script>
   </body>
