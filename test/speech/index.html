@@ -129,7 +129,7 @@
       const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
       recognition.interimResults = true;
       recognition.lang = 'en-US';
-      control.onclick = () => {
+      control.onclick = async () => {
         if (control.classList.contains('record')) {
           // ◉
           recognition.start();
@@ -137,14 +137,16 @@
           control.classList = 'stop';
         } else if (control.classList.contains('stop')) {
           // ■
-          recognition.stop();
           control.innerText = '채점중...';
           control.classList = 'grading';
 
-          // 채점
+          await new Promise((f) => setTimeout(f, 1000));
+          recognition.stop();
+
           speeches.push(speech);
           const finalSpeech = speeches.join(' ');
 
+          // 채점
           const trimmedWords = sentence
             .toLowerCase()
             .replaceAll(/[^a-z ]/g, '')
@@ -156,14 +158,12 @@
           words.forEach((word, i) => {
             const wordSpan = document.createElement('span');
             wordSpan.innerText = word;
-
             const wordIndex = speechWords.indexOf(trimmedWords[i]);
             if (wordIndex === -1) {
               wordSpan.classList = 'wrong';
             } else {
               speechWords.splice(wordIndex, 1);
             }
-
             wordBox.append(wordSpan);
           });
           wordBox.style.visibility = 'visible';
@@ -187,7 +187,7 @@
           .map((result) => result.transcript)
           .join('');
         if (e.results[0].isFinal) {
-          // 문장이 종료되었으면
+          // 문장 종료 시
           speeches.push(speech);
           speech = '';
         }
