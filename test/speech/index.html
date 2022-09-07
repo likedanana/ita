@@ -141,6 +141,7 @@
 
           // 채점
           const result = recognition.stop();
+          alert(result);
           if (result) {
             speech += result[0].transcript;
           }
