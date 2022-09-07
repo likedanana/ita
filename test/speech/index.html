@@ -141,7 +141,9 @@
 
           // 채점
           const result = recognition.stop();
-          speech += result?.transcript ?? '';
+          if (result) {
+            speech += result[0].transcript;
+          }
 
           const trimmedWords = sentence
             .toLowerCase()
