@@ -114,6 +114,7 @@
       //   const sentence = `{{ request('sentence') }}`;
       const sentence = `Did it appear from India, China or Japan? No.`;
       const words = sentence.split(' ');
+      const speeches = [];
       let speech = '';
 
       // 🔊 음성 합성
@@ -125,7 +126,7 @@
       };
 
       // ◉ 음성 인식
-      const recognition = new webkitSpeechRecognition();
+      const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
       recognition.interimResults = true;
       recognition.lang = 'en-US';
       control.onclick = () => {
@@ -141,11 +142,14 @@
           control.classList = 'grading';
 
           // 채점
+          speeches.push(speech);
+          const finalSpeech = speeches.join(' ');
+
           const trimmedWords = sentence
             .toLowerCase()
             .replaceAll(/[^a-z ]/g, '')
             .split(' ');
-          const speechWords = speech
+          const speechWords = finalSpeech
             .toLowerCase()
             .replaceAll(/[^a-z ]/g, '')
             .split(' ');
@@ -167,7 +171,7 @@
           // 참고 - 스피치 보기
           wordBox.append(document.createElement('br'));
           wordBox.append(document.createElement('br'));
-          wordBox.append(speech);
+          wordBox.append(finalSpeech);
 
           // 버튼 변경
           control.innerText = '▶';
@@ -178,21 +182,18 @@
 
       // 음성 > 텍스트 변환 시 호출
       recognition.onresult = (e) => {
+        speech = Array.from(e.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join('');
         if (e.results[0].isFinal) {
           // 문장이 종료되었으면
-          speech += Array.from(e.results)
-            .map((result) => result[0])
-            .map((result) => result.transcript)
-            .join('');
-          speech += ' ';
+          speeches.push(speech);
         }
       };
       recognition.onend = (e) => {
         if (control.classList.contains('stop')) {
           recognition.start();
-        } else {
-          alert(e.results);
-          alert(e.result);
         }
       };
     </script>
