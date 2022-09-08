@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Recording</title>
     <style>
-      body > *:not(script){
+      body > *:not(script) {
         display: block;
         margin-top: 10px;
       }
@@ -27,27 +27,26 @@
 
         // MediaRecorder 객체 생성
         const mediaRecorder = new MediaRecorder(mediaStream);
-        const audioArray = [];
-        let file;
+        const chunks = [];
 
         // 이벤트리스너 - 녹음 중
         mediaRecorder.ondataavailable = (e) => {
-          audioArray.push(event.data);
+          chunks.push(event.data);
         };
 
         // 이벤트리스너 - 녹음 종료
         mediaRecorder.onstop = (e) => {
-          file = new File(
-            audioArray,
-            'filename.mp3', // clientExt로 전달
-            {type:'audio/mp3'} // 녹음 후 다운로드 시 확장자 결정
-            );
+          const file = new File(
+            chunks,
+            "recording.mp3", // clientExt로 전달
+            { type: "audio/mp3" } // 녹음 후 다운로드 시 확장자 결정
+          );
 
           // url 생성
-          const blobURL = window.URL.createObjectURL(file);
+          const fileUrl = window.URL.createObjectURL(file);
 
           // 재생
-          document.querySelector("audio").src = blobURL;
+          document.querySelector("audio").src = fileUrl;
         };
 
         // 녹음 시작 버튼
@@ -56,7 +55,7 @@
           mediaRecorder.start();
 
           // 기존 데이터 비우기
-          audioArray.splice(0);
+          chunks.splice(0);
         };
 
         // 녹음 종료 버튼
