@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostly Fluid</title>
+    <style>
+
+        .container{
+            display: flex;
+            justify-content: center;
+            align-content: flex-start;
+            flex-wrap: wrap;
+            /* background-color: lightcoral; */
+        }
+
+        .item{
+            background-color: lightblue;
+            box-sizing: border-box;
+            border: solid black 1px;
+            /* 좁은 화면(~700)*/
+            width: 100%;
+        }
+
+        .header, .footer{height: 180px;}
+        .content1{height: 500px;}
+        .content2{height: 500px;}
+
+        /* 중간 화면(700~1200) */
+        @media (min-width: 700px) {
+            .container{width:100%;}
+            .header, .footer{width: 100%;}
+            .content1{width: 60%;}
+            .content2{width: 40%;}
+        }
+
+        /* 넓은 화면(1200~) */
+        @media (min-width: 1200px) {
+            .container{
+                width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item header"><h1>Header</h1></div>
+        <div class="item content1"><h1>Content1</h1></div>
+        <div class="item content2"><h1>Content2</h1></div>
+        <div class="item footer"><h1>Footer</h1></div>
+    </div>
+</body>
+</html>
+

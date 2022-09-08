@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Off Canvas</title>
+    <style>
+        #menutgl, #arrowtgl{
+            display: none;
+        }
+
+        .header{
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            width: 100%;
+            height: 70px;
+            background-color:lightcoral;
+        }
+
+        .menubtn, .arrowbtn{
+            padding: 0 10px 10px 10px;
+            background-color: lightcoral;
+            font-size: 35pt;
+            text-align: center;
+            color: white;
+        }
+
+        /* 숨어있는 메뉴바 */
+        .menubar{
+            position: absolute;
+            top:8px; left:0;
+            width: 40%;
+            height: 570px;
+            min-width: 200px;
+            transform:translateX(-100%);
+            background-color:lightcoral;
+        }
+
+        h1{
+            margin:0;
+            padding: 10px;
+            height: 50px;
+        }
+
+        .menubar h1{
+            background-color: rgb(0,0,0,0.08);
+        }
+
+        /* 메뉴바를 닫는 반투명 여백 */
+        .closer{
+            position: fixed;
+            top:0; bottom:0; left:0; right:0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background-color: rgb(0,0,0,0.3)
+        }
+
+        /* 체크된 체크박스 .offcanvas를 선택 */
+        #menutgl:checked ~.menubar{
+            /* x위치를 0으로 변경 */
+            transform: translateX(0);
+        }
+
+        /* 체크된 체크박스 자식 .closer를 선택 */
+        #menutgl:checked ~.closer{
+            display: block;
+        }
+        
+        #arrowtgl:checked ~.content{
+            width: 0%
+        }
+
+        #arrowtgl:checked ~.sidebar{
+            width: 100%;
+            display: block;
+        }
+
+        .container{
+            display: flex;
+            flex-wrap: nowrap;
+            width: 100%;
+            height: 500px;
+        }
+
+        .content{
+            background-color: lightsalmon;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar{
+            background-color: lightpink;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        @media (min-width: 700px){
+            .arrowbtn{
+                display: none;
+            }
+
+            .content{
+                width: 60%;
+            }
+
+            .sidebar{
+                display: block;
+                width: 40%;
+            }
+        }
+
+        @media (min-width: 1200px){
+            .header{
+                display: none;
+            }
+
+            .menubar{
+                position:relative;
+                top:0;
+                transform: translateX(0);
+                width: 15%;
+                height: 500px;
+            }
+
+            .content{
+                width:55%;
+            }
+            
+            .sidebar{
+                width: 30%;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <label for="menutgl" class="menubtn">≡</label>
+        <label for="arrowtgl" class="arrowbtn">></label>
+    </div>
+    <div class="container">
+        <input type="checkbox" id="menutgl">
+        <label for="menutgl" class="closer"></label>
+        <div class="menubar">
+            <h1>MENU</h1>
+            <ul>
+                <li><a href="#">list</a></li>
+                <li><a href="#">list</a></li>
+                <li><a href="#">list</a></li>
+            </ul>
+        </div>
+        <input type="checkbox" id="arrowtgl">
+        <div class="content"><h1>Content</h1></div>
+        <div class="sidebar"><h1>Sidebar</h1></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="show">
+        <ul class="numbers">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+        </ul>
+      </div>
+      <ul class="buttons">
+        <li><button data-section="0"></button></li>
+        <li><button data-section="1"></button></li>
+        <li><button data-section="2"></button></li>
+      </ul>
+    </div>
+    <script>
+      const buttonsUl = document.querySelector('.buttons');
+      const numbersUl = document.querySelector('.numbers')
+      const buttons = document.querySelectorAll('button');
+
+      buttonsUl.onclick = function(event) {
+        const target = event.target;
+        const section = target.dataset.section;
+        const xPositions = ['0', '-403', '-806'];
+        numbersUl.style.transform = 'translateX(' + xPositions[section] + 'px)';
+
+        for(let button of buttons) {
+          button.style.backgroundColor = 'skyblue';
+        }
+        target.style.backgroundColor = 'darkblue';
+      }
+    </script>
+  </body>
+  </html>
