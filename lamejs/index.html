@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lamejs - Web Recording</title>
+    <style>
+      body > *:not(script) {
+        display: block;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <button id="recordStart">녹음 시작</button>
+      <button id="recordEnd">녹음 종료</button>
+    </div>
+    <audio id="audio" controls></audio>
+    <script src="./scripts/lame.all.js"></script>
+    <script src="./scripts/recorder.js"></script>
+    <script src="./scripts/Mp3Recorder.js"></script>
+    <script>
+      let recorder;
+
+      recordStart.onclick = async () => {
+        recorder = new Mp3Recorder();
+        await recorder.setRecorder();
+        recorder.record();
+      };
+
+      recordEnd.onclick = () => {
+        recorder.stop();
+        const mp3 = recorder.getMp3();
+      };
+    </script>
+  </body>
+</html>
