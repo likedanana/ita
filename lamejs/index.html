@@ -34,7 +34,7 @@
 
       recorder.onmp3setCallback = (mp3Blob) => {
         const mp3Url = URL.createObjectURL(mp3Blob);
-        document.querySelector("audio").src = mp3Url;
+        audio.src = mp3Url;
       };
     </script>
     <script>
