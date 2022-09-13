@@ -33,7 +33,7 @@ class Mp3Recorder {
     };
     this.recorder.onstop = () => {
       const blob = new Blob(this.chunks);
-      const mp3File = new File([blob], `recording.${this.ext}`, {
+      this.mp3File = new File([blob], `recording.${this.ext}`, {
         type: this.mimeType,
       });
       if (this.onstopCallback) this.onstopCallback();
@@ -55,7 +55,7 @@ class Mp3Recorder {
   // mp3 파일 가져오기
   getMp3 = () => {
     if (!this.recorder) return;
-    return this.blob;
+    return this.mp3File;
   };
 
   /*************
