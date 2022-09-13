@@ -63,22 +63,22 @@ class Mp3Recorder {
   *************/
   // 브라우저 확장자 지원 여부 확인
   isTypeSupported = () => {
+    let isTypeSupported = false;
+
     if (MediaRecorder.isTypeSupported("audio/ogg")) {
       this.mimeType = "audio/ogg";
       this.ext = "ogg";
-      console.log(1);
+      isTypeSupported = true;
     } else if (MediaRecorder.isTypeSupported("audio/webm")) {
       this.mimeType = "audio/webm";
       this.ext = "webm";
-      console.log(2);
+      isTypeSupported = true;
     } else if (MediaRecorder.isTypeSupported("audio/mp4")) {
       this.mimeType = "audio/mp4";
       this.ext = "m4a";
-      console.log(3);
-    } else {
-      return false;
+      isTypeSupported = true;
     }
 
-    return true;
+    return isTypeSupported;
   };
 }
