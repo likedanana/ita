@@ -21,20 +21,32 @@
     <script src="./scripts/lame.all.js"></script>
     <script src="./scripts/Mp3Recorder.js"></script>
     <script>
-      let recorder;
+      /*************
+       recorder
+      *************/
+      const recorder = new Mp3Recorder();
 
+      recorder.onstopCallback = () => {
+        const mp3 = recorder.getMp3();
+        const mp3Url = URL.createObjectURL(mp3);
+        document.querySelector("audio").src = mp3Url;
+      };
+
+      recorder.onerrorCallback = (errorCode) => {
+        if (errorCode === "Type Unsupported") {
+          alert("녹음 기능이 지원되지 않는 브라우저입니다.");
+          recordStart.disabled = true;
+          recordEnd.disabled = true;
+        }
+      };
+    </script>
+    <script>
       recordStart.onclick = async () => {
-        recorder = new Mp3Recorder();
         await recorder.setRecorder();
         recorder.start();
       };
 
       recordEnd.onclick = () => {
-        recorder.onstopCallback = () => {
-          const mp3 = recorder.getMp3();
-          const mp3Url = URL.createObjectURL(mp3);
-          document.querySelector("audio").src = mp3Url;
-        };
         recorder.stop();
       };
     </script>

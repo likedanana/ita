@@ -30,6 +30,9 @@
         const chunks = [];
 
         // 이벤트리스너 - 녹음 중
+        // - stop(), returnData() 호출
+        // - start(n) 설정 시 n밀리초마다 호출
+        // https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/dataavailable_event
         mediaRecorder.ondataavailable = (e) => {
           chunks.push(event.data);
         };
