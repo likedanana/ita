@@ -1,35 +1,46 @@
 // <script src="./scripts/lame.all.js"></script>
-// <script src="./scripts/recorder.js"></script>
 // <script src="./scripts/Mp3Recorder.js"></script>
 class Mp3Recorder {
   constructor() {
-    // propeties
     this.recorder;
+    this.chunks = [];
+    this.blob;
     this.encoder = new lamejs.Mp3Encoder(1, 44100, 128);
+
+    this.onstopCallback;
   }
 
+  // 마이크 - Recorder 연결(사용자에게 마이크 권한 요청)
   setRecorder = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
     });
-    const audioContext = new AudioContext();
-    const input = audioContext.createMediaStreamSource(stream);
-    this.recorder = new Recorder(input);
+    this.recorder = new MediaRecorder(stream);
+    this.recorder.ondataavailable = (e) => {
+      this.chunks.push(e.data);
+    };
+    this.recorder.onstop = () => {
+      this.blob = new Blob(this.chunks);
+      if (this.onstopCallback) this.onstopCallback();
+    };
   };
 
-  record = () => {
-    this.recorder.record();
+  start = () => {
+    if (!recorder) return;
+    this.recorder.start(30000);
   };
 
   stop = () => {
+    if (!recorder) return;
     this.recorder.stop();
   };
 
   getMp3 = () => {
-    this.recorder.exportWAV((blob) => {
-      const mp3Data = [this.encoder.encodeBuffer(blob), this.encoder.flush()];
-      const mp3 = new File(mp3Data, "recording.mp3", { type: "audio/mp3" });
-      audio.src = URL.createObjectURL(mp3);
-    });
+    if (!recorder) return;
+    return this.blob;
   };
+
+  /*************
+   private
+  *************/
 }

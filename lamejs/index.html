@@ -19,7 +19,6 @@
     </div>
     <audio id="audio" controls></audio>
     <script src="./scripts/lame.all.js"></script>
-    <script src="./scripts/recorder.js"></script>
     <script src="./scripts/Mp3Recorder.js"></script>
     <script>
       let recorder;
@@ -27,12 +26,16 @@
       recordStart.onclick = async () => {
         recorder = new Mp3Recorder();
         await recorder.setRecorder();
-        recorder.record();
+        recorder.start();
       };
 
       recordEnd.onclick = () => {
+        recorder.onstopCallback = () => {
+          const mp3 = recorder.getMp3();
+          const mp3Url = URL.createObjectURL(mp3);
+          document.querySelector("audio").src = mp3Url;
+        };
         recorder.stop();
-        const mp3 = recorder.getMp3();
       };
     </script>
   </body>
