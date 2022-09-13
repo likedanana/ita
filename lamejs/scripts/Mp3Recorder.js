@@ -62,8 +62,8 @@ class Mp3Recorder {
       const buffer = await new AudioContext().decodeAudioData(e.target.result);
       const offlineAudioCtx = new OfflineAudioContext({
         numberOfChannels: 1,
-        length: 48000 * buffer.duration,
-        sampleRate: 44100,
+        length: 16000 * buffer.duration,
+        sampleRate: 16000,
       });
 
       const soundSource = offlineAudioCtx.createBufferSource();
