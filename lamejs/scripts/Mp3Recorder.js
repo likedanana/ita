@@ -6,23 +6,29 @@ class Mp3Recorder {
     this.mimeType;
     this.ext;
 
-    this.onstopCallback;
+    this.onerrorCallback;
     this.onmp3setCallback;
 
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     window.OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
   }
 
-  // recorder 설정(호출 시 사용자에게 마이크 권한 요청)
+  // 마이크 연결 / recorder 초기 설정
   setRecorder = async () => {
-    this.checkBrowserSupport();
+    if (!this.checkBrowserSupport()) return;
 
     // 마이크 연결(권한 요청)
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-    });
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+    } catch (e) {
+      this.onerrorCallback(e.message);
+      return;
+    }
 
-    // recorder 설정
+    // recorder 초기 설정
     const chunks = [];
     this.recorder = new MediaRecorder(stream);
     this.recorder.ondataavailable = (e) => {
@@ -34,7 +40,11 @@ class Mp3Recorder {
         type: this.mimeType,
       });
 
-      this.setMp3(recordFile); // mp3setCallback 호출됨
+      // test
+      const mp3Url = URL.createObjectURL(recordFile);
+      audio.src = mp3Url;
+
+      //   this.setMp3(recordFile);
     };
   };
 
@@ -47,7 +57,7 @@ class Mp3Recorder {
   // 녹음 완료
   stop = () => {
     if (!this.recorder) return;
-    this.recorder.stop();
+    this.recorder.stop(); // mp3setCallback 호출
   };
 
   /*************
@@ -84,14 +94,16 @@ class Mp3Recorder {
 
   // 브라우저 지원 확인
   checkBrowserSupport = () => {
-    if (!window.MediaRecorder) {
+    if (!window.MediaRecorder && this.onerrorCallback) {
       // MediaRecorder
       this.onerrorCallback("MediaRecorder Not Emplemented");
+      return false;
     } else if (!this.isTypeSupported() && this.onerrorCallback) {
       // 확장자
       this.onerrorCallback("Type Unsupported");
-      return;
+      return false;
     }
+    return true;
   };
 
   // 브라우저 지원 확인 - 확장자
@@ -184,10 +196,7 @@ class Mp3Recorder {
     const mp3Encoder = new lamejs.Mp3Encoder(wav.channels, wav.sampleRate, 128);
     const maxSamples = 1152;
 
-    console.log("wav", wav);
-
     const samplesLeft = wav.channels === 1 ? dataView : new Int16Array(wav.dataLen / (2 * wav.channels));
-
     const samplesRight = wav.channels === 2 ? new Int16Array(wav.dataLen / (2 * wav.channels)) : undefined;
 
     if (wav.channels > 1) {
