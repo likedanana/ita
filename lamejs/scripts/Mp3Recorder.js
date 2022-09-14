@@ -40,11 +40,7 @@ class Mp3Recorder {
         type: this.mimeType,
       });
 
-      // test
-      const mp3Url = URL.createObjectURL(recordFile);
-      audio.src = mp3Url;
-
-      //   this.setMp3(recordFile);
+      this.setMp3(recordFile); // mp3setCallback 호출
     };
   };
 
@@ -57,7 +53,7 @@ class Mp3Recorder {
   // 녹음 완료
   stop = () => {
     if (!this.recorder) return;
-    this.recorder.stop(); // mp3setCallback 호출
+    this.recorder.stop(); // ondataavailable > onstop 호출
   };
 
   /*************
@@ -79,6 +75,7 @@ class Mp3Recorder {
       const soundSource = offlineAudioCtx.createBufferSource();
       soundSource.buffer = buffer;
       soundSource.connect(offlineAudioCtx.destination);
+      soundSource.start(0);
 
       const renderedBuffer = await offlineAudioCtx.startRendering();
       const wavBuffer = this.bufferToWav(renderedBuffer, offlineAudioCtx.length);
