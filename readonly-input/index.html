@@ -6,13 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      .input-group {
+        position: relative;
+      }
       input[type='password'] {
         width: 20px;
         height: 20px;
       }
-      /* input[type='number'] {
-        visibility: hidden;
-      } */
+      input[type='number'] {
+        position: absolute;
+        left: 0;
+        width: 121px;
+        height: 21px;
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
@@ -23,8 +30,5 @@
       <input class="input-pwd" type="password" name="" maxlength="1" placeholder="•" readonly />
       <input id="number" type="number" />
     </div>
-    <script>
-      number.focus()
-    </script>
   </body>
 </html>
